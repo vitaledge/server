@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img src="https://thumbs.gfycat.com/DearWellinformedDalmatian-size_restricted.gif" id="loader">
+
+<form action="https://www.payfast.co.za/eng/process" method="POST" id="paymentForm">
+
+        <input type="hidden" name="merchant_id"   id="merchant_id">
+
+        <input type="hidden" name="merchant_key"  id="merchant_key">
+
+        <input type="hidden" name="item_name"  value="CrunchTime Food" id="item_name">
+
+        <input type="hidden" name="amount" id="amount">
+        
+       
+        
+        <input type="hidden" name="return_url" id="success_url">
+        
+        <input type="hidden" name="cancel_url" value="http://www.benzium.com">
+        
+        <input type="hidden" name="notify_url" value="http://www.benzium.com">
+
+        <input type="hidden" name="setup" value='' id="split_payment">
+
+        
+</form>
+
+<script>
+
+function myfunction(){
+var url_string = window.location.href;  
+var url = new URL(url_string);
+
+var merchant_id = url.searchParams.get("merchant_id");
+ 
+var merchant_key  = url.searchParams.get("accountKey");
+var amount = url.searchParams.get("amount");
+var merchant_id_2 = url.searchParams.get("merchant_id_2");
+
+var accountKey = url.searchParams.get("accountKey");
+
+var cartId = url.searchParams.get("cartId");
+var userId = url.searchParams.get("userId");
+var driverId = url.searchParams.get("driverId");
+var address = url.searchParams.get("address");
+var sellerId = url.searchParams.get("sellerId");
+ 
+document.getElementById("merchant_id").value = merchant_id;
+document.getElementById("merchant_key").value = merchant_key;
+document.getElementById("amount").value = amount;
+document.getElementById("success_url").value ='http://crunchtime.mobi:3002/orderNow?cartId='+cartId+'&sellerId='+sellerId+'&driverId='+driverId+'&address='+address+'&userId='+userId+'&price='+amount;
+document.getElementById("split_payment").value =JSON.stringify( { 'split_payment' : {
+            'merchant_id':merchant_id_2,
+            'percentage':15,
+        }});
+}
+
+document.onreadystatechange = function() { 
+    if (document.readyState !== "complete") { 
+        document.querySelector("body").style.visibility = "hidden"; 
+        document.querySelector("#loader").style.visibility = "visible"; 
+        myfunction();
+    } else { 
+        document.querySelector("#loader").style.display = "none"; 
+        document.querySelector("body").style.visibility = "visible"; 
+        myfunction();
+        document.getElementById("paymentForm").submit();
+    } 
+}; 
+
+</script>
+
+
+</body>
+</html>
